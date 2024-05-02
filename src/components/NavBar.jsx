@@ -77,7 +77,7 @@ function NavBar() {
             <Box
               sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
               component={"img"}
-              width={"120px"}
+              width={"80px"}
               // style={{ padding: "0.5rem" }}
               src={require("../assets/images/abc-university.png")}
             />
@@ -88,10 +88,10 @@ function NavBar() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h4" sx={{ fontWeight: "900" }}>
-                University of ABC
+              <Typography variant="h6" sx={{ fontWeight: "900" }}>
+                University of VBC
               </Typography>
-              <p style={{ fontSize: "12px", color: "#F4B119" }}>
+              <p style={{ fontSize: "10px", color: "#F4B119" }}>
                 ACCREDITED BY NAAC WITH "A+" GRADE
               </p>
             </div>
@@ -222,7 +222,7 @@ function NavBar() {
                           flexDirection: { xs: "none", md: "column" },
                           justifyContent: { xs: "none", md: "center" },
                           alignItems: { xs: "none", md: "center" },
-                          fontSize: "20px",
+                          fontSize: "14px",
 
                           flexGrow: 1,
                           // fontFamily: "monospace",
@@ -253,7 +253,7 @@ function NavBar() {
                 ))}
               </Box>
 
-              <TextField
+              {/* <TextField
                 sx={{
                   mr: 2,
                   backgroundColor: "white",
@@ -269,7 +269,7 @@ function NavBar() {
                   ),
                   disableUnderline: true,
                 }}
-              />
+              /> */}
               <p>|</p>
               <IconButton onClick={() => {}} sx={{ p: 0, pr: 2, pl: 2 }}>
                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}

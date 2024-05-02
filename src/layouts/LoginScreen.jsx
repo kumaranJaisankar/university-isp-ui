@@ -170,18 +170,6 @@ export default function LogginScreen() {
               >
                 Sign In
               </Button>
-              {/* <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid> */}
             </Box>
           </Box>
           <Copyright sx={{ mt: 8, mb: 4, zIndex: 10 }} />
@@ -200,8 +188,8 @@ export default function LogginScreen() {
               width={"150px"}
             />
 
-            <Typography variant="h4" sx={{ fontWeight: "900" }}>
-              University of ABC
+            <Typography variant="h5" sx={{ fontWeight: "900" }}>
+              University of VBC
             </Typography>
             <p style={{ fontSize: "12px", color: "#F4B119" }}>
               ACCREDITED BY NAAC WITH "A+" GRADE

@@ -76,7 +76,7 @@ nav-link {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 100px;
+  /* padding: 80px; */
 }
 .intro-card {
   text-align: center;
