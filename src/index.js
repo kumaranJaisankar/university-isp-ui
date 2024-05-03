@@ -4,14 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import TawlkIntegration from "./components/TawlkIntegration";
+// import TawlkIntegration from "./components/TawlkIntegration";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
-      <TawlkIntegration />
+      {/* <TawlkIntegration /> */}
     </BrowserRouter>
   </React.StrictMode>
 );
