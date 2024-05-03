@@ -20,7 +20,7 @@ export default function DashboardScreen() {
       <div className="ag-format-container">
         <div className="ag-courses_box">
           <div className="ag-courses_item">
-            <a href="#" className="ag-courses-item_link">
+            <Link to={"/filtered-logs"} className="ag-courses-item_link">
               <div className="ag-courses-item_bg"></div>
 
               <div className="ag-courses-item_title">
@@ -38,11 +38,11 @@ export default function DashboardScreen() {
                   />
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
 
           <div className="ag-courses_item">
-            <a href="#" className="ag-courses-item_link">
+            <Link to={"/ongoing-logs"} className="ag-courses-item_link">
               <div className="ag-courses-item_bg"></div>
 
               <div className="ag-courses-item_title">
@@ -58,7 +58,7 @@ export default function DashboardScreen() {
                   />
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
 
           <div className="ag-courses_item">

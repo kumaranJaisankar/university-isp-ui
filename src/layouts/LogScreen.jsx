@@ -53,7 +53,7 @@ export default function LogScreen() {
               borderRadius: "8px",
             }}
             label="Username"
-            placeholder="sername or ID"
+            placeholder="Username or ID"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -69,8 +69,8 @@ export default function LogScreen() {
               <DatePicker label="End date" />
             </DemoContainer>
             <DemoContainer components={["TimePicker"]} sx={{ my: 1 }}>
-              <TimePicker label="Start Time" />
-              <TimePicker label="End Time" />
+              <TimePicker ampm={false} format="HH:mm:ss" label="Start Time" />
+              <TimePicker ampm={false} format="HH:mm:ss" label="End Time" />
             </DemoContainer>
           </LocalizationProvider>
           <TextField
