@@ -7,10 +7,10 @@
 #myBtn {
   margin-top: 20px;
   cursor: pointer;
-  width:150px;
+  width: 150px;
   font-size: 12px;
   background-color: rgb(77, 167, 252);
-  padding: .5px;
+  padding: 0.5px;
   border-radius: 40px;
   display: flex;
   justify-content: center;
@@ -21,7 +21,6 @@
 #myBtn:hover {
   background-color: #7dbbf1;
 }
-
 
 .icon-color {
   color: white;
@@ -90,6 +89,9 @@
 
 .ag-courses-item_link:hover .ag-courses-item_title {
   color: white;
+}
+.ag-courses-item_link:hover .icon-color {
+  filter: brightness(0) invert(1);
 }
 .ag-courses-item_date-box {
   font-size: 18px;

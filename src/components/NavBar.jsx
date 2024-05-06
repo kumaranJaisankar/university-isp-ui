@@ -47,12 +47,11 @@ function NavBar() {
 
   return (
     <AppBar
-      className="full-width"
+      // className="full-width"
       position="sticky"
       style={{
         // maxWidth: "100vw",
         // width: `${window.innerWidth}px`,
-        // margin: "20px",
         borderRadius: "10px",
         backgroundColor: appTheme,
         overflowX: "hidden",
