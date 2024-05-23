@@ -172,6 +172,7 @@ export default function SentRequestTab() {
       />{" "}
       <>
         {/* {isLoading && <CircularProgress />} */}
+        <h3 style={{ color: "grey" }}>New Request :</h3>
         <form
           onSubmit={(v) => {
             v.preventDefault();
@@ -187,9 +188,11 @@ export default function SentRequestTab() {
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              gap: 5,
+              gap: 3,
+              p: 1,
             }}
           >
+            {" "}
             <TextField
               size="small"
               required={true}
@@ -212,7 +215,12 @@ export default function SentRequestTab() {
               }}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["DatePicker"]} sx={{ my: 1 }}>
+              <DemoContainer
+                components={["DatePicker"]}
+                sx={{
+                  my: 1,
+                }}
+              >
                 <DatePicker
                   sx={{
                     ".css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input": {
