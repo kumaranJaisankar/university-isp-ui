@@ -122,35 +122,35 @@ export default function OngoingFilterScreen() {
         );
       },
     },
-    {
-      field: "action",
-      headerName: "",
-      width: 80,
-      sortable: false,
-      renderCell: (params) => {
-        console.log(params);
-        return (
-          <Button
-            variant="contained"
-            color="error"
-            fullWidth="false"
-            style={{
-              padding: 0,
-              maxWidth: "30px",
-              maxHeight: "30px",
-              minWidth: "30px",
-              minHeight: "30px",
-            }}
-            onClick={() => {
-              setOpen(true);
-              setParams(params);
-            }}
-          >
-            <DeleteIcon fontSize="small" style={{ color: "white" }} />
-          </Button>
-        );
-      },
-    },
+    // {
+    //   field: "action",
+    //   headerName: "",
+    //   width: 80,
+    //   sortable: false,
+    //   renderCell: (params) => {
+    //     console.log(params);
+    //     return (
+    //       <Button
+    //         variant="contained"
+    //         color="error"
+    //         fullWidth="false"
+    //         style={{
+    //           padding: 0,
+    //           maxWidth: "30px",
+    //           maxHeight: "30px",
+    //           minWidth: "30px",
+    //           minHeight: "30px",
+    //         }}
+    //         onClick={() => {
+    //           setOpen(true);
+    //           setParams(params);
+    //         }}
+    //       >
+    //         <DeleteIcon fontSize="small" style={{ color: "white" }} />
+    //       </Button>
+    //     );
+    //   },
+    // },
   ];
   const openClose = () => {
     setOpen(!open);
@@ -166,9 +166,8 @@ export default function OngoingFilterScreen() {
         // margin: "20px",
       }}
     >
-      <NavBar />
       <AlertDialog open={open} paramsData={paramsData} openClose={openClose} />
-      <h1>Ongoing Logs</h1>
+      {/* <h1>Ongoing Logs</h1> */}
       <div style={{ height: 400, width: "100%" }}>
         {isLoading ? (
           <div

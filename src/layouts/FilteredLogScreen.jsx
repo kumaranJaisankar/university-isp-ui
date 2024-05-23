@@ -8,6 +8,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AlertDialog from "../components/AlertDialog";
+import Loader from "../components/Loader";
 
 // const rows = [
 //   { id: 1, lastName: "Snow", logFilename: "Jon", age: 35 },
@@ -69,6 +70,7 @@ export default function FilteredLogScreen() {
 
   const [dataRow, setDataRow] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [deleteLoad, setDeleteLoad] = useState(false);
   useEffect(() => {
     setLoading(true);
     fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=SUCCESS")
@@ -249,13 +251,15 @@ export default function FilteredLogScreen() {
         // margin: "20px",
       }}
     >
-      <NavBar />
-      <h1>Filtered Logs</h1>
+      {/* <NavBar />
+      <h1>Filtered Logs</h1> */}
       <div style={{ height: 400, width: "100%" }}>
+        <Loader isLoading={deleteLoad} />
         <AlertDialog
           open={open}
           paramsData={paramsData}
           openClose={openClose}
+          setDeleteLoad={setDeleteLoad}
         />
         {isLoading ? (
           <div
@@ -280,7 +284,7 @@ export default function FilteredLogScreen() {
             disableColumnSelector={true}
             disableDensitySelector={true}
             onRowClick={() => console.log("dfs")}
-            rows={rows}
+            rows={dataRow}
             columns={columns}
             onColumnHeaderClick={() => console.log("dfd")}
             initialState={{

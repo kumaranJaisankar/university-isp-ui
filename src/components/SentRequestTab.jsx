@@ -21,34 +21,59 @@ import { Bounce, Slide, toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { renderTimeViewClock } from "@mui/x-date-pickers";
 
-export default function LogScreen() {
+export default function SentRequestTab() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
   const [logFileName, setLogFileName] = useState("");
 
-  const [startDate, setSelectedDate] = useState("");
-  const [endDate, setSelectedEndate] = useState("");
+  const [startDate, setSelectedDate] = useState(
+    dateFormat(dayjs(new Date()).subtract(1, "day"))
+  );
+  const [endDate, setSelectedEndate] = useState(
+    dateFormat(dayjs(new Date()).subtract(1, "day"))
+  );
 
-  const [startTime, setSelectStartTime] = useState("");
+  const [startTime, setSelectStartTime] = useState(
+    handelTimeFormat(dayjs().hour(0).minute(0).second(0))
+  );
   const [startHour, setselectedStartHour] = useState(0);
-  const [endTime, setSelectEndTime] = useState("");
+  const [endTime, setSelectEndTime] = useState(
+    handelTimeFormat(dayjs().hour(23).minute(59).second(0))
+  );
+
+  function dateFormat(data) {
+    const date = new Date(data.$d);
+    const followingDay = new Date(date.getTime());
+    const formattedDate = followingDay.toISOString().split("T")[0];
+    return formattedDate;
+  }
 
   const handleDateChange = (data) => {
-    const date = new Date(data.$d);
-    const followingDay = new Date(date.getTime() + 86400000);
-    const formattedDate = followingDay.toISOString().split("T")[0]; // Get the YYYY-MM-DD part
+    // Get the YYYY-MM-DD part
 
-    setSelectedDate(formattedDate);
+    setSelectedDate(dateFormat(data));
+    console.log(dateFormat(data));
   };
 
   const handleEndDateChange = (data) => {
-    const date = new Date(data.$d);
-    const followingDay = new Date(date.getTime() + 86400000);
-    const formattedDate = followingDay.toISOString().split("T")[0]; // Get the YYYY-MM-DD part
-    setSelectedEndate(formattedDate);
-    console.log(formattedDate);
+    setSelectedEndate(dateFormat(data));
+    console.log(dateFormat(data));
   };
+
+  function handelTimeFormat(data) {
+    const date = new Date(data.$d);
+
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    return formattedTime;
+  }
+
   const handleStartTime = (data) => {
     const date = new Date(data.$d);
 
@@ -64,16 +89,8 @@ export default function LogScreen() {
   };
 
   const handleEndTime = (data) => {
-    const date = new Date(data.$d);
-
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-    console.log(formattedTime);
-    setSelectEndTime(formattedTime);
+    console.log(handelTimeFormat(data));
+    setSelectEndTime(handelTimeFormat(data));
   };
 
   const onSubmitForm = () => {
@@ -82,10 +99,11 @@ export default function LogScreen() {
       user_id: userName,
       start_date: startDate,
       end_date: endDate,
-      output_file_name: logFileName,
-      start_time: startTime === "" ? "00:00:00" : startTime,
-      end_time: endTime === "" ? "23:59:59" : endTime,
+      output_file_name: `${userName}_${startDate}_${endDate}_${startTime}_${endTime}`,
+      start_time: startTime,
+      end_time: endTime,
     };
+    console.log(`${userName}_${startDate}_${endDate}_${startTime}_${endTime}`);
     const delay = (t) => new Promise((resolve) => setTimeout(resolve, t));
     delay(3000).then(
       () => {}
@@ -106,8 +124,8 @@ export default function LogScreen() {
       .then((response) => response.json())
       .then((data) => {
         toast.dismiss();
-        // delay(5000).then(() => navigate("/dashboard"));
-        toast.success("Successflly Request sent", {
+        delay(5000).then(() => navigate("/dashboard"));
+        toast.success("Successflly submited, navigate to Dashboard ", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -140,16 +158,7 @@ export default function LogScreen() {
   };
 
   return (
-    <div
-      style={{
-        margin: "15px",
-        overflowX: "hidden",
-        // backgroundColor: "red",
-        minHeight: "100vh",
-        // margin: "20px",
-      }}
-    >
-      <NavBar />
+    <div style={{ width: "100%", marginTop: "20px" }}>
       <ToastContainer
         position="bottom-center"
         autoClose={5000}
@@ -159,16 +168,9 @@ export default function LogScreen() {
         rtl={false}
         draggable
         theme="light"
-        transitio={Bounce}
+        transition={Bounce}
       />{" "}
-      <Container
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          height: "100vh",
-        }}
-      >
+      <>
         {/* {isLoading && <CircularProgress />} */}
         <form
           onSubmit={(v) => {
@@ -178,15 +180,18 @@ export default function LogScreen() {
         >
           <Card
             sx={{
-              width: "35vw",
-              padding: "20px",
-              margin: "30px",
+              width: "100vw",
+              maxWidth: "100%",
+              padding: "0px",
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               justifyContent: "center",
+              alignItems: "center",
+              gap: 5,
             }}
           >
             <TextField
+              size="small"
               required={true}
               sx={{
                 my: 1,
@@ -209,10 +214,17 @@ export default function LogScreen() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]} sx={{ my: 1 }}>
                 <DatePicker
+                  sx={{
+                    ".css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input": {
+                      color: "grey",
+                    },
+                  }}
+                  defaultValue={dayjs(new Date(startDate))}
                   slotProps={{
                     textField: {
                       required: true,
                       variant: "outlined",
+                      size: "small",
                     },
                   }}
                   format="DD/MM/YYYY"
@@ -221,10 +233,17 @@ export default function LogScreen() {
                   onChange={handleDateChange}
                 />
                 <DatePicker
+                  sx={{
+                    ".css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input": {
+                      color: "grey",
+                    },
+                  }}
+                  defaultValue={dayjs(new Date(endDate))}
                   slotProps={{
                     textField: {
                       required: true,
                       variant: "outlined",
+                      size: "small",
                     },
                   }}
                   format="DD/MM/YYYY"
@@ -236,6 +255,18 @@ export default function LogScreen() {
               </DemoContainer>
               <DemoContainer components={["TimePicker"]} sx={{ my: 1 }}>
                 <TimePicker
+                  sx={{
+                    ".css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input": {
+                      color: "grey",
+                    },
+                  }}
+                  defaultValue={dayjs().hour(0).minute(0).second(0)}
+                  slotProps={{
+                    textField: {
+                      variant: "outlined",
+                      size: "small",
+                    },
+                  }}
                   viewRenderers={{
                     hours: renderTimeViewClock,
                     minutes: renderTimeViewClock,
@@ -247,6 +278,18 @@ export default function LogScreen() {
                   label="Start Time"
                 />
                 <TimePicker
+                  sx={{
+                    ".css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input": {
+                      color: "grey",
+                    },
+                  }}
+                  defaultValue={dayjs().hour(23).minute(59).second(0)}
+                  slotProps={{
+                    textField: {
+                      variant: "outlined",
+                      size: "small",
+                    },
+                  }}
                   viewRenderers={{
                     hours: renderTimeViewClock,
                     minutes: renderTimeViewClock,
@@ -260,7 +303,7 @@ export default function LogScreen() {
                 />
               </DemoContainer>
             </LocalizationProvider>
-            <TextField
+            {/* <TextField
               onChange={(e) => setLogFileName(e.target.value)}
               required={true}
               sx={{
@@ -279,7 +322,7 @@ export default function LogScreen() {
                 ),
                 disableUnderline: true,
               }}
-            />
+            /> */}
             <Button
               type="submit"
               sx={{
@@ -291,11 +334,11 @@ export default function LogScreen() {
               variant="contained"
               // onClick={onSubmit}
             >
-              Submit
+              SUBMIT
             </Button>
           </Card>
         </form>
-      </Container>
+      </>
       {/* <DashboardBanner /> */}
     </div>
   );

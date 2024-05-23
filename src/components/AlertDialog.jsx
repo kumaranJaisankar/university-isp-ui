@@ -5,8 +5,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Bounce, toast } from "react-toastify";
 
-export default function AlertDialog({ open, paramsData, openClose }) {
+export default function AlertDialog({
+  open,
+  paramsData,
+  openClose,
+  setDeleteLoad,
+}) {
   //   const [opens, setOpen] = React.useState(false);
 
   //   //   React.useEffect(() => {
@@ -18,8 +24,50 @@ export default function AlertDialog({ open, paramsData, openClose }) {
   //   };
 
   const handleDelete = () => {
+    setDeleteLoad(true);
     console.log(`${paramsData.row.log_file_name} deleted`);
     openClose();
+    const bodyData = { file_name: paramsData.row.log_file_name };
+    fetch("http://localhost:8000/logs/delete-log-file/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setDeleteLoad(false);
+        toast.success("Successflly submited, navigate to Dashboard ", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+
+        console.log("Data:", data); // Check the data structure
+      })
+      .catch((error) => {
+        setDeleteLoad(false);
+        console.log(error);
+        toast.error(error === "" ? error : "Something wrong", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        // console.error("Error fetching data:", error);
+      });
   };
 
   return (
