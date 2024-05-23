@@ -13,6 +13,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import FilteredLogScreen from "./FilteredLogScreen";
 import Loader from "../components/Loader";
+import FailedLogs from "./FailedLog";
 
 export default function DashboardScreen() {
   const [isLoading, setLoading] = useState(false);
@@ -56,14 +57,29 @@ export default function DashboardScreen() {
               aria-label="lab API tabs example"
               centered
             >
-              <Tab label="Filtered Logs" value="1" />
-              <Tab label="Ongoing Logs" value="2" />
+              <Tab
+                label="Filtered Logs"
+                value="1"
+                TouchRippleProps={{ style: { color: "green" } }}
+              />
+              <Tab
+                label="Ongoing Logs"
+                value="2"
+                TouchRippleProps={{ style: { color: "yellow" } }}
+                // sx={{ backgroundColor: "yellow", borderRadius: "10px" }}
+              />
+              <Tab
+                label="Failed Logs"
+                value="3"
+                TouchRippleProps={{ style: { color: "red" } }}
+              />
               <Button
                 variant="contained"
                 sx={{ position: "absolute", right: 0, borderRadius: "30px" }}
                 onClick={refreshStatus}
               >
                 <AutorenewIcon style={{ color: "white" }} />
+                Refresh
               </Button>
             </TabList>
           </Box>
@@ -73,6 +89,9 @@ export default function DashboardScreen() {
           </TabPanel>
           <TabPanel value="2">
             <OngoingFilterScreen />
+          </TabPanel>
+          <TabPanel value="3">
+            <FailedLogs />
           </TabPanel>
         </TabContext>
       </Box>

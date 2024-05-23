@@ -12,6 +12,7 @@ export default function AlertDialog({
   paramsData,
   openClose,
   setDeleteLoad,
+  onDelete,
 }) {
   //   const [opens, setOpen] = React.useState(false);
 
@@ -38,7 +39,8 @@ export default function AlertDialog({
       .then((response) => response.json())
       .then((data) => {
         setDeleteLoad(false);
-        toast.success("Successflly submited, navigate to Dashboard ", {
+        onDelete();
+        toast.success(`Successflly deleted ${paramsData.row.log_file_name}`, {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,

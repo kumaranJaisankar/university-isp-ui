@@ -9,6 +9,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AlertDialog from "../components/AlertDialog";
 import Loader from "../components/Loader";
+import { fastMemo } from "@mui/x-data-grid/internals";
+import Download from "../components/Download";
 
 // const rows = [
 //   { id: 1, lastName: "Snow", logFilename: "Jon", age: 35 },
@@ -22,7 +24,7 @@ import Loader from "../components/Loader";
 //   { id: 9, lastName: "Roxie", logFilename: "Harvey", age: 65 },
 // ];
 
-const rows = [
+let rows = [
   {
     id: 5,
     request_id: "dd738057-a5c6-404b-8f0c-d8109fa50ba3",
@@ -71,12 +73,11 @@ export default function FilteredLogScreen() {
   const [dataRow, setDataRow] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [deleteLoad, setDeleteLoad] = useState(false);
-  useEffect(() => {
-    setLoading(true);
+  function fetchData() {
     fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=SUCCESS")
       .then((response) => response.json())
       .then((data) => {
-        setDataRow(data);
+        setDataRow([...data].reverse());
         setLoading(false);
         console.log("Data:", data); // Check the data structure
       })
@@ -84,6 +85,10 @@ export default function FilteredLogScreen() {
         setLoading(false);
         console.error("Error fetching data:", error);
       });
+  }
+  useEffect(() => {
+    setLoading(true);
+    fetchData();
     // const getData = async () => {
     //   const response = await filteredLogs();
     //   const { data } = await response;
@@ -94,12 +99,10 @@ export default function FilteredLogScreen() {
   }, []);
 
   const downloadFile = (params) => {
-    setLoading(true);
     console.log(params.row.logFilename);
     fetch(`http://localhost:8000/logs/download/${params.row.log_file_name}/`)
       .then((response) => response.blob())
       .then((blob) => {
-        setLoading(false);
         // Create a blob URL for the downloaded file
         const url = window.URL.createObjectURL(new Blob([blob]));
 
@@ -116,7 +119,6 @@ export default function FilteredLogScreen() {
         document.body.removeChild(link);
       })
       .catch((error) => {
-        setLoading(false);
         console.error("Error downloading file:", error);
       });
   };
@@ -160,72 +162,40 @@ export default function FilteredLogScreen() {
       headerName: "File",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
+      width: 100,
+      renderCell: (params) => {
+        console.log(params);
+        return <Download params={params} />;
+      },
+    },
+    {
+      field: "delete",
+      headerName: "",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
       width: 200,
       renderCell: (params) => {
         console.log(params);
         return (
-          <div
+          <Button
+            variant="contained"
+            color="error"
+            fullWidth="false"
             style={{
-              display: "flex",
-              alignItems: "center",
-              marginTop: "10px",
+              padding: 0,
+              maxWidth: "30px",
+              maxHeight: "30px",
+              minWidth: "30px",
+              minHeight: "30px",
+            }}
+            onClick={() => {
+              setOpen(true);
+              setParams(params);
             }}
           >
-            <button
-              // size="small"
-              style={{
-                backgroundColor: "#1565C0",
-                width: "80px",
-                marginRight: "10px",
-                padding: "2px",
-                border: "none",
-                borderRadius: "5px",
-              }}
-              onClick={() => downloadFile(params)}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {" "}
-                <DownloadIcon fontSize="small" style={{ color: "white" }} />
-                <p
-                  style={{
-                    fontSize: "8px",
-                    textTransform: "lowercase",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    padding: 0,
-                    color: "white",
-                  }}
-                >
-                  {params.row.log_file_name}.zipeee
-                </p>
-              </div>
-            </button>
-            <Button
-              variant="contained"
-              color="error"
-              fullWidth="false"
-              style={{
-                padding: 0,
-                maxWidth: "30px",
-                maxHeight: "30px",
-                minWidth: "30px",
-                minHeight: "30px",
-              }}
-              onClick={() => {
-                setOpen(true);
-                setParams(params);
-              }}
-            >
-              <DeleteIcon fontSize="small" style={{ color: "white" }} />
-            </Button>
-          </div>
+            <DeleteIcon fontSize="small" style={{ color: "white" }} />
+          </Button>
+
           // <Button
           //   variant="contained"
           //   color="primary"
@@ -241,13 +211,18 @@ export default function FilteredLogScreen() {
     setOpen(!open);
   };
 
+  const onDelete = () => {
+    console.log("delete agude punda");
+    fetchData();
+  };
+
   return (
     <div
       style={{
         margin: "15px",
         overflowX: "hidden",
         // backgroundColor: "red",
-        minHeight: "100vh",
+        // minHeight: "100vh",
         // margin: "20px",
       }}
     >
@@ -260,6 +235,7 @@ export default function FilteredLogScreen() {
           paramsData={paramsData}
           openClose={openClose}
           setDeleteLoad={setDeleteLoad}
+          onDelete={onDelete}
         />
         {isLoading ? (
           <div

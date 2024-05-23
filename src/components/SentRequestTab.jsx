@@ -104,15 +104,15 @@ export default function SentRequestTab() {
       end_time: endTime,
     };
     console.log(`${userName}_${startDate}_${endDate}_${startTime}_${endTime}`);
-    const delay = (t) => new Promise((resolve) => setTimeout(resolve, t));
-    delay(3000).then(
-      () => {}
-      // toast.update(id, {
-      //   render: "All is good",
-      //   type: "success",
-      //   isLoading: false,
-      // })
-    );
+    // const delay = (t) => new Promise((resolve) => setTimeout(resolve, t));
+    // delay(3000).then(
+    //   () => {}
+    //   // toast.update(id, {
+    //   //   render: "All is good",
+    //   //   type: "success",
+    //   //   isLoading: false,
+    //   // })
+    // );
 
     fetch("http://localhost:8000/logs/trigger-script/", {
       method: "POST",
@@ -124,8 +124,8 @@ export default function SentRequestTab() {
       .then((response) => response.json())
       .then((data) => {
         toast.dismiss();
-        delay(5000).then(() => navigate("/dashboard"));
-        toast.success("Successflly submited, navigate to Dashboard ", {
+        // delay(5000).then(() => navigate("/dashboard"));
+        toast.success("Successflly submited", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,

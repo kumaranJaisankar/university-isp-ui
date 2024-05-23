@@ -63,14 +63,14 @@ const rows = [
   },
 ];
 
-export default function OngoingFilterScreen() {
+export default function FailedLogs() {
   const [open, setOpen] = useState(false);
   const [paramsData, setParams] = useState({});
   const [dataRow, setDataRow] = useState([]);
   const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-    fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=RUNNING")
+    fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=FAILED")
       .then((response) => response.json())
       .then((data) => {
         setDataRow(data);
@@ -183,7 +183,7 @@ export default function OngoingFilterScreen() {
         ) : (
           <DataGrid
             localeText={{
-              noRowsLabel: "Currently No Ongoing Logs",
+              noRowsLabel: "Currently No Failed Logs",
             }}
             density="comfortable"
             checkboxSelection={false}
