@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DownloadIcon from "@mui/icons-material/Download";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 
 function Download(props) {
   const [isloading, setloading] = useState(false);
@@ -48,33 +48,13 @@ function Download(props) {
       }}
     >
       {isloading ? (
-        <p
-          style={{
-            maxWidth: "50px",
-            fontSize: "8px",
-            textTransform: "lowercase",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            padding: 0,
-            color: "white",
-          }}
-        >
-          downloading..
-        </p>
+        <CircularProgress style={{ color: "white" }} size={15} />
       ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <DownloadIcon
-            fontSize="small"
-            style={{ color: "white", margin: 0, padding: 0 }}
-          />
-          <p
+        <DownloadIcon
+          fontSize="small"
+          style={{ color: "white", margin: 0, padding: 0 }}
+        />
+        /* <p
             style={{
               maxWidth: "50px",
               fontSize: "8px",
@@ -87,8 +67,7 @@ function Download(props) {
             }}
           >
             {props.params.row.log_file_name}.zip
-          </p>
-        </div>
+          </p> */
       )}
     </Button>
   );
