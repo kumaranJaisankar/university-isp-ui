@@ -96,7 +96,6 @@ export default function FilteredLogScreen() {
   }
   useEffect(() => {
     setLoading(true);
-    setDataRow(rows);
     fetchData();
     // const getData = async () => {
     //   const response = await filteredLogs();
