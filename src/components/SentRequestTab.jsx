@@ -126,7 +126,7 @@ export default function SentRequestTab() {
         toast.dismiss();
         // delay(5000).then(() => navigate("/dashboard"));
         toast.success("Successflly submited", {
-          position: "bottom-center",
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -143,8 +143,7 @@ export default function SentRequestTab() {
         toast.dismiss();
         console.log(error);
         toast.error(error === "" ? error : "Something wrong", {
-          position: "bottom-center",
-          autoClose: 5000,
+          position: "top-right",
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -160,7 +159,7 @@ export default function SentRequestTab() {
   return (
     <div style={{ width: "100%", marginTop: "20px" }}>
       <ToastContainer
-        position="bottom-center"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}

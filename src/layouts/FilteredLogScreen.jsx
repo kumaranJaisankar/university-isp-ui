@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, CircularProgress } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
 import { filteredLogs } from "../axios/ApiService";
 import DownloadIcon from "@mui/icons-material/Download";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -11,6 +16,8 @@ import AlertDialog from "../components/AlertDialog";
 import Loader from "../components/Loader";
 import { fastMemo } from "@mui/x-data-grid/internals";
 import Download from "../components/Download";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 
 // const rows = [
 //   { id: 1, lastName: "Snow", logFilename: "Jon", age: 35 },
@@ -73,6 +80,7 @@ export default function FilteredLogScreen() {
   const [dataRow, setDataRow] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [deleteLoad, setDeleteLoad] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
   function fetchData() {
     fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=SUCCESS")
       .then((response) => response.json())
@@ -88,6 +96,7 @@ export default function FilteredLogScreen() {
   }
   useEffect(() => {
     setLoading(true);
+    setDataRow(rows);
     fetchData();
     // const getData = async () => {
     //   const response = await filteredLogs();
@@ -124,7 +133,16 @@ export default function FilteredLogScreen() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
+    {
+      field: "index",
+      headerName: "S.No",
+      filterable: false,
+      renderCell: (index) =>
+        index.api.getRowIndexRelativeToVisibleRows(
+          index.row.id + index.row.user_id
+        ) + 1,
+    },
+    { field: "user_id", headerName: "User ID", width: 150 },
     { field: "log_file_name", headerName: "Log Name", width: 150 },
     { field: "start_date", headerName: "start Date", width: 150 },
     {
@@ -216,19 +234,66 @@ export default function FilteredLogScreen() {
     fetchData();
   };
 
+  const filterUserId = (e) => {
+    setSearchVal(e.target.value);
+    console.log(e.target.value);
+    const filteredUser = dataRow.filter((val) =>
+      val.user_id.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setDataRow(filteredUser);
+    if (e.target.value === "") {
+      fetchData();
+    }
+  };
+
   return (
     <div
       style={{
         margin: "15px",
         overflowX: "hidden",
         // backgroundColor: "red",
-        // minHeight: "100vh",
+        minHeight: "70vh",
         // margin: "20px",
       }}
     >
       {/* <NavBar />
       <h1>Filtered Logs</h1> */}
       <div style={{ height: 400, width: "100%" }}>
+        <TextField
+          margin="normal"
+          name="userId"
+          placeholder="Search by UserID.."
+          type={"text"}
+          id="userId"
+          value={searchVal}
+          autoComplete="current-password"
+          onChange={filterUserId}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <div onClick={() => {}} style={{ cursor: "pointer" }}>
+                  <SearchIcon />
+                </div>
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment>
+                {searchVal != "" && (
+                  <div
+                    onClick={() => {
+                      setSearchVal("");
+                      fetchData();
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <CloseIcon />
+                  </div>
+                )}
+              </InputAdornment>
+            ),
+            disableUnderline: true,
+          }}
+        />
         <Loader isLoading={deleteLoad} />
         <AlertDialog
           open={open}
@@ -250,6 +315,7 @@ export default function FilteredLogScreen() {
           </div>
         ) : (
           <DataGrid
+            getRowId={(row) => row.id + row.user_id}
             localeText={{
               noRowsLabel: "Currently No Filtered Logs",
             }}
@@ -260,7 +326,7 @@ export default function FilteredLogScreen() {
             disableColumnSelector={true}
             disableDensitySelector={true}
             onRowClick={() => console.log("dfs")}
-            rows={dataRow}
+            rows={[...dataRow].reverse()}
             columns={columns}
             onColumnHeaderClick={() => console.log("dfd")}
             initialState={{

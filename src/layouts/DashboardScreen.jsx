@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import NavBar from "../components/NavBar";
 import DashboardBanner from "../components/DashboardBanner";
 import "../styles/DashboardScreen.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { appTheme } from "../constants/colors";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SentRequestTab from "../components/SentRequestTab";
@@ -17,16 +17,19 @@ import FailedLogs from "./FailedLog";
 
 export default function DashboardScreen() {
   const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const refreshStatus = () => {
     setLoading(true);
     fetch("http://localhost:8000/logs/update-running-logs/")
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
+        navigate(0);
         console.log("Data:", data); // Check the data structure
       })
       .catch((error) => {
         setLoading(false);
+
         console.error("Error fetching data:", error);
       });
   };
@@ -34,6 +37,7 @@ export default function DashboardScreen() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <div
       style={{
@@ -58,6 +62,11 @@ export default function DashboardScreen() {
               centered
             >
               <Tab
+                // style={{
+                //   backgroundColor: "grey",
+                //   borderRadius: "10px 10px 0 0",
+                //   color: "green",
+                // }}
                 label="Filtered Logs"
                 value="1"
                 TouchRippleProps={{ style: { color: "green" } }}

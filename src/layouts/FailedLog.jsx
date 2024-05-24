@@ -90,7 +90,17 @@ export default function FailedLogs() {
     // getData();
   }, []);
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
+    {
+      field: "index",
+      headerName: "S.No",
+      filterable: false,
+      renderCell: (index) =>
+        index.api.getRowIndexRelativeToVisibleRows(
+          index.row.id + index.row.user_id
+        ) + 1,
+    },
+    { field: "user_id", headerName: "User ID", width: 150 },
+
     { field: "log_file_name", headerName: "Log Name", width: 150 },
     { field: "start_date", headerName: "start Date", width: 150 },
     {
@@ -182,6 +192,7 @@ export default function FailedLogs() {
           </div>
         ) : (
           <DataGrid
+            getRowId={(row) => row.id + row.user_id}
             localeText={{
               noRowsLabel: "Currently No Failed Logs",
             }}
