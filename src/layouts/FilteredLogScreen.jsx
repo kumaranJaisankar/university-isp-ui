@@ -251,7 +251,7 @@ export default function FilteredLogScreen() {
         margin: "15px",
         overflowX: "hidden",
         // backgroundColor: "red",
-        minHeight: "70vh",
+        minHeight: "90vh",
         // margin: "20px",
       }}
     >
