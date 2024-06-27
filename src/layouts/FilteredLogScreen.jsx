@@ -180,6 +180,7 @@ export default function FilteredLogScreen() {
       description: "This column has a value getter and is not sortable.",
       sortable: false,
       width: 100,
+
       renderCell: (params) => {
         console.log(params);
         return <Download params={params} />;
@@ -314,6 +315,11 @@ export default function FilteredLogScreen() {
           </div>
         ) : (
           <DataGrid
+            sx={{
+              "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                outline: "none !important",
+              },
+            }}
             getRowId={(row) => row.id + row.user_id}
             localeText={{
               noRowsLabel: "Currently No Filtered Logs",

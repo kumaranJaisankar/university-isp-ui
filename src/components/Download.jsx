@@ -29,6 +29,7 @@ function Download(props) {
       .catch((error) => {
         setloading(false);
         console.error("Error downloading file:", error);
+        
       });
   };
   return (

@@ -23,9 +23,14 @@ export default function AlertDialog({
   //   const handleClickOpen = () => {
   //     setOpen(true);
   //   };
+  const deleteRow = (bool) => {
+    if (setDeleteLoad) {
+      setDeleteLoad(bool);
+    }
+  };
 
   const handleDelete = () => {
-    setDeleteLoad(true);
+    deleteRow(true);
     console.log(`${paramsData.row.log_file_name} deleted`);
     openClose();
     const bodyData = { file_name: paramsData.row.log_file_name };
@@ -38,7 +43,8 @@ export default function AlertDialog({
     })
       .then((response) => response.json())
       .then((data) => {
-        setDeleteLoad(false);
+        // setDeleteLoad(false);
+        deleteRow(false);
         onDelete();
         toast.success(`Successflly deleted ${paramsData.row.log_file_name}`, {
           position: "bottom-center",
@@ -55,7 +61,8 @@ export default function AlertDialog({
         console.log("Data:", data); // Check the data structure
       })
       .catch((error) => {
-        setDeleteLoad(false);
+        // setDeleteLoad(false);
+        deleteRow(false);
         console.log(error);
         toast.error(error === "" ? error : "Something wrong", {
           position: "bottom-center",
