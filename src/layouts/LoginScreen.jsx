@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link"
+import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -185,22 +185,24 @@ export default function LogginScreen() {
           >
             <img
               src={require("../assets/images/abc-university.png")}
-              width={"150px"}
+              width={"250px"}
+              style={{ marginBottom: "15px" }}
             />
 
-            <Typography variant="h5" sx={{ fontWeight: "900" }}>
+            {/* <Typography variant="h5" sx={{ fontWeight: "900" }}>
               University of VBC
             </Typography>
             <p style={{ fontSize: "12px", color: "#F4B119" }}>
               ACCREDITED BY NAAC WITH "A+" GRADE
-            </p>
+            </p> */}
           </Container>
           <div className="intro-card">
-            <h1>University Wireless Network Accesses</h1>
+            <h1>GITAM University Internet Log Solution</h1>
             <p style={{ maxWidth: "45vw" }}>
-              Welcome to the network service dedicated to visiting professors,
-              visiting students in university campus. users now can manage their
-              credentials and control their network activity
+              Welcome to the network service log dedicated to visiting
+              professors, visiting students in university campus.
+              {/* users now can
+              manage their credentials and control their network activity */}
             </p>
           </div>
         </div>

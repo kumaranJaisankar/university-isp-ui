@@ -90,13 +90,13 @@ function NavBar() {
                 }}
               >
                 <Box
-                  sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+                  sx={{ display: { xs: "none", md: "flex" }, mr: 1, my: 1 }}
                   component={"img"}
-                  width={"80px"}
+                  width={"160px"}
                   // style={{ padding: "0.5rem" }}
                   src={require("../assets/images/abc-university.png")}
                 />
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -109,7 +109,7 @@ function NavBar() {
                   <p style={{ fontSize: "10px", color: "#F4B119" }}>
                     ACCREDITED BY NAAC WITH "A+" GRADE
                   </p>
-                </div>
+                </div> */}
               </div>
 
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
