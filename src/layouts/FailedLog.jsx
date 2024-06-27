@@ -132,6 +132,44 @@ export default function FailedLogs() {
         );
       },
     },
+    {
+      field: "delete",
+      headerName: "",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      width: 200,
+      renderCell: (params) => {
+        console.log(params);
+        return (
+          <Button
+            variant="contained"
+            color="error"
+            fullWidth="false"
+            style={{
+              padding: 0,
+              maxWidth: "30px",
+              maxHeight: "30px",
+              minWidth: "30px",
+              minHeight: "30px",
+            }}
+            onClick={() => {
+              setOpen(true);
+              setParams(params);
+            }}
+          >
+            <DeleteIcon fontSize="small" style={{ color: "white" }} />
+          </Button>
+
+          // <Button
+          //   variant="contained"
+          //   color="primary"
+          //   size="small"
+
+          // >
+          // </Button>
+        );
+      },
+    },
     // {
     //   field: "action",
     //   headerName: "",

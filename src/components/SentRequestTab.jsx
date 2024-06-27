@@ -5,7 +5,11 @@ import {
   Card,
   CircularProgress,
   Container,
+  FormControl,
   InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
 } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -26,6 +30,7 @@ export default function SentRequestTab() {
   const [isLoading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
   const [logFileName, setLogFileName] = useState("");
+  const [userType, setUserType] = useState("ipAddress");
 
   const [startDate, setSelectedDate] = useState(
     dateFormat(dayjs(new Date()).subtract(1, "day"))
@@ -102,6 +107,7 @@ export default function SentRequestTab() {
       output_file_name: `${userName}_${startDate}_${endDate}_${startTime}_${endTime}`,
       start_time: startTime,
       end_time: endTime,
+      user_type: userType,
     };
     console.log(`${userName}_${startDate}_${endDate}_${startTime}_${endTime}`);
     // const delay = (t) => new Promise((resolve) => setTimeout(resolve, t));
@@ -156,6 +162,7 @@ export default function SentRequestTab() {
       });
   };
 
+  const formControl = (e) => {};
   return (
     <div style={{ width: "100%", marginTop: "20px" }}>
       <ToastContainer
@@ -192,27 +199,53 @@ export default function SentRequestTab() {
             }}
           >
             {" "}
-            <TextField
-              size="small"
-              required={true}
-              sx={{
-                my: 1,
-                backgroundColor: "white",
-                // "& fieldset": { border: "none" },
-                borderRadius: "8px",
-              }}
-              onChange={(e) => setUserName(e.target.value)}
-              label="Username"
-              placeholder="Username or ID"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <BadgeIcon />
-                  </InputAdornment>
-                ),
-                disableUnderline: true,
-              }}
-            />
+            <FormControl>
+              <div>
+                <InputLabel id="demo-simple-select-standard-label">
+                  Type
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  value={userType}
+                  size="small"
+                  name="usertype"
+                  autoWidth
+                  fullWidth
+                  label="type"
+                  onChange={(e) => setUserType(e.target.value)}
+                  // sx={{ width: "250px" }}
+                >
+                  <MenuItem value="ipAddress">Ip address</MenuItem>
+                  <MenuItem value="userId">User ID</MenuItem>
+                </Select>
+              </div>
+              <br />
+              <TextField
+                size="small"
+                required={true}
+                sx={{
+                  my: 1,
+                  backgroundColor: "white",
+                  // "& fieldset": { border: "none" },
+                  borderRadius: "8px",
+                }}
+                onChange={(e) => setUserName(e.target.value)}
+                label={userType === "ipAddress" ? "Ip address" : "User Id"}
+                placeholder={
+                  userType === "ipAddress"
+                    ? "Enter Ip address"
+                    : "Enter User Id"
+                }
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <BadgeIcon />
+                    </InputAdornment>
+                  ),
+                  disableUnderline: true,
+                }}
+              />
+            </FormControl>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer
                 components={["DatePicker"]}
