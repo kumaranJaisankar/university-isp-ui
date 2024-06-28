@@ -8,6 +8,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import AlertDialog from "../components/AlertDialog";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Loader from "../components/Loader";
 
 // const rows = [
 //   { id: 1, lastName: "Snow", logFilename: "Jon", age: 35 },
@@ -68,6 +69,8 @@ export default function FailedLogs() {
   const [paramsData, setParams] = useState({});
   const [dataRow, setDataRow] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [deleteLoad, setDeleteLoad] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=FAILED")
@@ -214,7 +217,13 @@ export default function FailedLogs() {
         // margin: "20px",
       }}
     >
-      <AlertDialog open={open} paramsData={paramsData} openClose={openClose} />
+      <Loader isLoading={deleteLoad} />
+      <AlertDialog
+        open={open}
+        paramsData={paramsData}
+        openClose={openClose}
+        setDeleteLoad={setDeleteLoad}
+      />
       {/* <h1>Ongoing Logs</h1> */}
       <div style={{ height: 400, width: "100%" }}>
         {isLoading ? (
