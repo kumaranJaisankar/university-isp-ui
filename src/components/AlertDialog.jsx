@@ -25,7 +25,7 @@ export default function AlertDialog({
   //   };
 
   const handleDelete = () => {
-    deleteRow(true);
+    setDeleteLoad(true);
     console.log(`${paramsData.row.log_file_name} deleted`);
     openClose();
     const bodyData = { file_name: paramsData.row.log_file_name };
