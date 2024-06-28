@@ -70,9 +70,7 @@ export default function FailedLogs() {
   const [dataRow, setDataRow] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [deleteLoad, setDeleteLoad] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
+  function fetchData() {
     fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=FAILED")
       .then((response) => response.json())
       .then((data) => {
@@ -84,6 +82,14 @@ export default function FailedLogs() {
         setLoading(false);
         console.error("Error fetching data:", error);
       });
+  }
+  const onDelete = () => {
+    fetchData();
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    fetchData();
     // const getData = async () => {
     //   const response = await filteredLogs();
     //   const { data } = await response;
@@ -223,6 +229,7 @@ export default function FailedLogs() {
         paramsData={paramsData}
         openClose={openClose}
         setDeleteLoad={setDeleteLoad}
+        onDelete={onDelete}
       />
       {/* <h1>Ongoing Logs</h1> */}
       <div style={{ height: 400, width: "100%" }}>
