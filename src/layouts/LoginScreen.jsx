@@ -199,8 +199,11 @@ export default function LogginScreen() {
           <div className="intro-card">
             <h1>GITAM University Internet Log Solution</h1>
             <p style={{ maxWidth: "45vw" }}>
-              Welcome to the network service log dedicated to visiting
-              professors, visiting students in university campus.
+              Welcome to the network service log application for the
+              administrative users of GITAM University. This tool provides
+              detailed logs of internet activity based on date and time
+              constraints, ensuring efficient monitoring and management of
+              network usage.
               {/* users now can
               manage their credentials and control their network activity */}
             </p>

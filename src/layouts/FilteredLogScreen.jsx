@@ -78,6 +78,7 @@ export default function FilteredLogScreen() {
   const [paramsData, setParams] = useState({});
 
   const [dataRow, setDataRow] = useState([]);
+  const [filteredRow, setFilteredRow] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [deleteLoad, setDeleteLoad] = useState(false);
   const [searchVal, setSearchVal] = useState("");
@@ -86,6 +87,7 @@ export default function FilteredLogScreen() {
       .then((response) => response.json())
       .then((data) => {
         setDataRow([...data].reverse());
+        setFilteredRow([...data].reverse());
         setLoading(false);
         console.log("Data:", data); // Check the data structure
       })
@@ -240,7 +242,7 @@ export default function FilteredLogScreen() {
     const filteredUser = dataRow.filter((val) =>
       val.user_id.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    setDataRow(filteredUser);
+    setFilteredRow(filteredUser);
     if (e.target.value === "") {
       fetchData();
     }
@@ -331,7 +333,7 @@ export default function FilteredLogScreen() {
             disableColumnSelector={true}
             disableDensitySelector={true}
             onRowClick={() => console.log("dfs")}
-            rows={[...dataRow].reverse()}
+            rows={[...filteredRow].reverse()}
             columns={columns}
             onColumnHeaderClick={() => console.log("dfd")}
             initialState={{
