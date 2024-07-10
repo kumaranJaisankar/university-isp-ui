@@ -47,18 +47,18 @@ const defaultTheme = createTheme();
 export default function LogginScreen() {
   const [isVisible, setVisiblity] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
-  const [isError, setError] = React.useState();
+  const [isError, setError] = React.useState("");
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      username: data.get("email"),
+      username: data.get("username"),
       password: data.get("password"),
     });
     const reqData = {
-      username: data.get("email"),
+      username: data.get("username"),
       password: data.get("password"),
     };
 
@@ -69,17 +69,21 @@ export default function LogginScreen() {
       },
       body: JSON.stringify(reqData),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        // localStorage.setItem("user", JSON.stringify(data));
-        // navigate("/dashboard");
-        // navigate(0);
-        setLoading(false);
-        console.log("Data:", data); // Check the data structure
+      .then(async (response) => {
+        const resData = await response.json();
+        if (response.ok) {
+          localStorage.setItem("user", JSON.stringify(resData));
+          // navigate("/dashboard");
+          // navigate(0);
+          setLoading(false);
+        } else {
+          setError("Invalid Username or password");
+          setLoading(false);
+        }
       })
       .catch((error) => {
         setLoading(false);
-        setError(error);
+        setError("Something went wrong");
         console.error("Error fetching data:", error);
       });
   };
@@ -182,6 +186,11 @@ export default function LogginScreen() {
                   disableUnderline: true,
                 }}
               />
+              {isError !== "" && (
+                <span style={{ display: "block", color: "red" }}>
+                  *{isError}
+                </span>
+              )}
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"

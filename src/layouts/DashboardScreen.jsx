@@ -19,8 +19,11 @@ export default function DashboardScreen() {
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const refreshStatus = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
     setLoading(true);
-    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/update-running-logs/`)
+    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/update-running-logs/`, {
+      headers: { Authorization: `Token ${user.token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
