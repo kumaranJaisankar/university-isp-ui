@@ -83,7 +83,9 @@ export default function FilteredLogScreen() {
   const [deleteLoad, setDeleteLoad] = useState(false);
   const [searchVal, setSearchVal] = useState("");
   function fetchData() {
-    fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=SUCCESS")
+    fetch(
+      `${process.env.REACT_APP_API_URL_ADMIN}/logs/filtered-logs/?status=SUCCESS`
+    )
       .then((response) => response.json())
       .then((data) => {
         setDataRow([...data].reverse());
@@ -110,7 +112,9 @@ export default function FilteredLogScreen() {
 
   const downloadFile = (params) => {
     console.log(params.row.logFilename);
-    fetch(`http://localhost:8000/logs/download/${params.row.log_file_name}/`)
+    fetch(
+      `${process.env.REACT_APP_API_URL_ADMIN}/logs/download/${params.row.log_file_name}/`
+    )
       .then((response) => response.blob())
       .then((blob) => {
         // Create a blob URL for the downloaded file

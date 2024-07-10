@@ -29,7 +29,7 @@ export default function AlertDialog({
     console.log(`${paramsData.row.log_file_name} deleted`);
     openClose();
     const bodyData = { file_name: paramsData.row.log_file_name };
-    fetch("http://localhost:8000/logs/delete-log-file/", {
+    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/delete-log-file/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

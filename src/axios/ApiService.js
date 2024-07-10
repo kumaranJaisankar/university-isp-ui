@@ -4,6 +4,6 @@ export const filteredLogs = (url = "/logs/filtered-logs/?status=RUNNING") => {
   return axios({
     url,
     method: "GET",
-    baseURL: "http://localhost:8000",
+    baseURL: `${process.env.REACT_APP_API_URL_ADMIN}`,
   });
 };

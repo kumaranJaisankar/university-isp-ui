@@ -20,7 +20,7 @@ export default function DashboardScreen() {
   const navigate = useNavigate();
   const refreshStatus = () => {
     setLoading(true);
-    fetch("http://localhost:8000/logs/update-running-logs/")
+    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/update-running-logs/`)
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);

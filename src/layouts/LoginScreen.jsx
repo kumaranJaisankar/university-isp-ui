@@ -46,18 +46,42 @@ const defaultTheme = createTheme();
 
 export default function LogginScreen() {
   const [isVisible, setVisiblity] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
+  const [isError, setError] = React.useState();
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get("email"),
+      username: data.get("email"),
       password: data.get("password"),
     });
+    const reqData = {
+      username: data.get("email"),
+      password: data.get("password"),
+    };
 
-    await localStorage.setItem("user", data.get("email"));
-    navigate("/dashboard");
-    navigate(0);
+    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/auth/login/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reqData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // localStorage.setItem("user", JSON.stringify(data));
+        // navigate("/dashboard");
+        // navigate(0);
+        setLoading(false);
+        console.log("Data:", data); // Check the data structure
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error);
+        console.error("Error fetching data:", error);
+      });
   };
 
   if (localStorage.getItem("user") !== null) {
@@ -111,10 +135,10 @@ export default function LogginScreen() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                placeholder="Username Or Email"
+                id="username"
+                placeholder="Username"
                 // label="Email "
-                name="email"
+                name="username"
                 autoComplete="email"
                 autoFocus
                 InputProps={{

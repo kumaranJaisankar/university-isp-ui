@@ -70,7 +70,9 @@ export default function OngoingFilterScreen() {
   const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-    fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=RUNNING")
+    fetch(
+      `${process.env.REACT_APP_API_URL_ADMIN}/logs/filtered-logs/?status=RUNNING`
+    )
       .then((response) => response.json())
       .then((data) => {
         setDataRow(data);

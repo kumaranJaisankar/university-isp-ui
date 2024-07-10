@@ -96,7 +96,7 @@ export default function LogScreen() {
       // })
     );
 
-    fetch("http://localhost:8000/logs/trigger-script/", {
+    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/trigger-script/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

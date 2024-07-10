@@ -23,7 +23,7 @@ import "../App.css";
 
 // const pages = ["dashboard", "logs"];
 const pages = [];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"];
 
 function NavBar() {
   const location = useLocation();

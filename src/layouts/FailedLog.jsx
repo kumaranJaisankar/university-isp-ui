@@ -71,7 +71,7 @@ export default function FailedLogs() {
   const [isLoading, setLoading] = useState(false);
   const [deleteLoad, setDeleteLoad] = useState(false);
   function fetchData() {
-    fetch("http://127.0.0.1:8000/logs/filtered-logs/?status=FAILED")
+    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/filtered-logs/?status=FAILED`)
       .then((response) => response.json())
       .then((data) => {
         setDataRow(data);

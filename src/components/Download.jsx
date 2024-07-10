@@ -7,7 +7,7 @@ function Download(props) {
   const downloadFile = (params) => {
     setloading(true);
     console.log(params.row.logFilename);
-    fetch(`http://localhost:8000/logs/download/${params.row.log_file_name}/`)
+    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/${params.row.log_file_name}/`)
       .then((response) => response.blob())
       .then((blob) => {
         // Create a blob URL for the downloaded file
@@ -29,7 +29,6 @@ function Download(props) {
       .catch((error) => {
         setloading(false);
         console.error("Error downloading file:", error);
-        
       });
   };
   return (
