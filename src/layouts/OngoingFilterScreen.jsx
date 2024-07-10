@@ -70,10 +70,10 @@ export default function OngoingFilterScreen() {
   const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
+    const user = JSON.parse(localStorage.getItem("user"));
+
     fetch(
-      `${process.env.REACT_APP_API_URL_ADMIN}/logs/filtered-logs/?status=RUNNING`
-    )
-      .then((response) => response.json())
+      `${process.env.REACT_APP_API_URL_ADMIN}/logs/filtered-logs/?status=RUNNING`,{headers: { Authorization: `Token ${user.token}`}}).then((response) => response.json())
       .then((data) => {
         setDataRow(data);
         setLoading(false);

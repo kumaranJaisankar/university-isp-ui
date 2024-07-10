@@ -119,11 +119,14 @@ export default function SentRequestTab() {
     //   //   isLoading: false,
     //   // })
     // );
+    const user = JSON.parse(localStorage.getItem("user"));
 
     fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/trigger-script/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+         Authorization: `Token ${user.token}` ,
+  
       },
       body: JSON.stringify(data),
     })

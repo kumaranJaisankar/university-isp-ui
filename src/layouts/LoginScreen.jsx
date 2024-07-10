@@ -62,7 +62,7 @@ export default function LogginScreen() {
       password: data.get("password"),
     };
 
-    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/auth/login/`, {
+    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/auth/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

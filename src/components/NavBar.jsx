@@ -30,6 +30,13 @@ function NavBar() {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [username,setUsername]=React.useState("")
+
+  React.useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user"));
+    setUsername(user.username)
+
+  },[])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -278,7 +285,7 @@ function NavBar() {
                       sx={{ fontSize: "45px", color: "whitesmoke" }}
                     />
                   </IconButton>
-                  <p>ADMIN</p>
+                  <p style={{textTransform:"capitalize"}}>{username !==""? username:"ADMIN"}</p>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <KeyboardArrowDownIcon

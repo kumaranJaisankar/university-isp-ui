@@ -71,7 +71,10 @@ export default function FailedLogs() {
   const [isLoading, setLoading] = useState(false);
   const [deleteLoad, setDeleteLoad] = useState(false);
   function fetchData() {
-    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/filtered-logs/?status=FAILED`)
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    fetch(`${process.env.REACT_APP_API_URL_ADMIN}/logs/filtered-logs/?status=FAILED`,{headers: { Authorization: `Token ${user.token}` },
+  })
       .then((response) => response.json())
       .then((data) => {
         setDataRow(data);

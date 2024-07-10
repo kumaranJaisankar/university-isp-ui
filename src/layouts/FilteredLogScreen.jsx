@@ -83,8 +83,11 @@ export default function FilteredLogScreen() {
   const [deleteLoad, setDeleteLoad] = useState(false);
   const [searchVal, setSearchVal] = useState("");
   function fetchData() {
+    const user = JSON.parse(localStorage.getItem("user"));
+
     fetch(
-      `${process.env.REACT_APP_API_URL_ADMIN}/logs/filtered-logs/?status=SUCCESS`
+      `${process.env.REACT_APP_API_URL_ADMIN}/logs/filtered-logs/?status=SUCCESS`,{headers: { Authorization: `Token ${user.token}` },
+    }
     )
       .then((response) => response.json())
       .then((data) => {
